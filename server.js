@@ -15,23 +15,21 @@ app.post('/create-post', function(req, res) {
       var parsedFile = JSON.parse(file); 
       parsedFile[currentDate] = post;
       var fileToWrite = JSON.stringify(parsedFile);
+      console.log(fileToWrite);
     }
     
     fs.writeFile(__dirname + '/data/posts.json', fileToWrite, function(err) {
       if (err) {
         console.log(err);
       }
+      res.send({blogpost: post});
     });
   }); 
 });
 
 app.get('/get-posts', function (req, res) {
   var file = __dirname + '/data/posts.json';
-    res.sendFile(file, function (err) {
-      if (err) {
-        console.log(file);
-      }
-    });
+    res.sendFile(file);
 });
 
 app.listen(3000, function() {
